@@ -130,7 +130,7 @@ class LoginScreen extends StatelessWidget {
               label: '로그인',
               width: Scaler.width(0.85, context),
               height: 43,
-              fontSize: 14,
+              fontSize: 15,
               backgroundColor: ColorSet.primary,
               borderColor: ColorSet.primary,
               fontColor: Colors.white,

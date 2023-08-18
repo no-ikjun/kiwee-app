@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:kiwee/screens/login/login_screen.dart';
+import 'package:kiwee/screens/home_screen.dart';
 import 'package:kiwee/screens/splash_screen/network_error_screen.dart';
 
 final Connectivity _connectivity = Connectivity();
@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       try {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()));
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
       } catch (e) {
         Navigator.pushAndRemoveUntil(
             context,
