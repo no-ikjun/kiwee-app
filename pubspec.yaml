@@ -64,7 +64,8 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-
+  assets:
+    - assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -89,24 +90,40 @@ flutter:
   #         weight: 700
   #
   fonts:
-    - family: AppleSDGothicNeo
+    - family: AppleSDGothicNeo100
       fonts:
         - asset: assets/fonts/AppleSDGothicNeoT.ttf
           weight: 100
+    - family: AppleSDGothicNeo200
+      fonts:
         - asset: assets/fonts/AppleSDGothicNeoUL.ttf
           weight: 200
+    - family: AppleSDGothicNeo300
+      fonts:
         - asset: assets/fonts/AppleSDGothicNeoL.ttf
           weight: 300
+    - family: AppleSDGothicNeo400
+      fonts:
         - asset: assets/fonts/AppleSDGothicNeoR.ttf
           weight: 400
+    - family: AppleSDGothicNeo500
+      fonts:
         - asset: assets/fonts/AppleSDGothicNeoM.ttf
           weight: 500
+    - family: AppleSDGothicNeo600
+      fonts:
         - asset: assets/fonts/AppleSDGothicNeoSB.ttf
           weight: 600
+    - family: AppleSDGothicNeo700
+      fonts:
         - asset: assets/fonts/AppleSDGothicNeoB.ttf
           weight: 700
+    - family: AppleSDGothicNeo800
+      fonts:
         - asset: assets/fonts/AppleSDGothicNeoEB.ttf
           weight: 800
+    - family: AppleSDGothicNeo900
+      fonts:
         - asset: assets/fonts/AppleSDGothicNeoH.ttf
           weight: 900
   # For details regarding fonts from package dependencies,
