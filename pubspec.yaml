@@ -65,7 +65,15 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - assets/images/
+    - assets/images/bell_icon.svg
+    - assets/images/menu_icon.svg
+    - assets/images/star_icon.svg
+    - assets/images/home_grey.svg
+    - assets/images/home_green.svg
+    - assets/images/store_grey.svg
+    - assets/images/store_green.svg
+    - assets/images/list_grey.svg
+    - assets/images/list_green.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
