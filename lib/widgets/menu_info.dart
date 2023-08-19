@@ -34,10 +34,10 @@ class MenuInfo extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Bibimbap with Galbi',
                   style: TextStyle(
                     fontFamily: "AppleSDGothicNeo600",
@@ -45,10 +45,10 @@ class MenuInfo extends StatelessWidget {
                     color: ColorSet.sub03,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
-                Text(
+                const Text(
                   'Bibimbap with Galbi',
                   style: TextStyle(
                     fontFamily: "AppleSDGothicNeo400",
@@ -56,17 +56,17 @@ class MenuInfo extends StatelessWidget {
                     color: Color(0xFF7D7D7D),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     Text(
-                      '9900원',
-                      style: TextStyle(
+                      '$price KRW',
+                      style: const TextStyle(
                         fontFamily: "AppleSDGothicNeo600",
                         fontSize: 16,
                         color: ColorSet.sub03,
@@ -77,10 +77,13 @@ class MenuInfo extends StatelessWidget {
               ],
             ),
             Image.asset(
-              'assets/images/food_example.png',
-              width: 100,
+              'assets/images/landscape.png',
+              width: 80,
             ),
           ],
+        ),
+        const SizedBox(
+          height: 15,
         ),
       ],
     );

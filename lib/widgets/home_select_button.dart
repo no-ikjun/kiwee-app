@@ -10,13 +10,15 @@ class SelectButton extends StatelessWidget {
   }) : super(key: key);
 
   final String label;
-  final Function onPressed;
+  final VoidCallback onPressed;
   final Color color;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPressed(),
+      onTap: onPressed,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       child: Container(
         width: 102,
         height: 34,

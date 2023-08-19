@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FoodCategory extends StatelessWidget {
   final String imageUrl;
   final String name;
-  final Function onTap;
+  final VoidCallback onTap;
   const FoodCategory({
     Key? key,
     required this.imageUrl,
@@ -19,7 +19,7 @@ class FoodCategory extends StatelessWidget {
           width: 10,
         ),
         InkWell(
-          onTap: onTap(),
+          onTap: onTap,
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           child: Column(

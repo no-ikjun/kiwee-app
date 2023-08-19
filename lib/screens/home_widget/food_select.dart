@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kiwee/apis/store.dart';
 import 'package:kiwee/common/ui/color_set.dart';
 import 'package:kiwee/screens/stores/store_info_screen.dart';
 import 'package:kiwee/widgets/app_bar.dart';
@@ -6,17 +8,54 @@ import 'package:kiwee/widgets/food_category.dart';
 import 'package:kiwee/widgets/food_store.dart';
 import 'package:scaler/scaler.dart';
 
-class FoodSelect extends StatelessWidget {
+class FoodSelect extends StatefulWidget {
   const FoodSelect({Key? key}) : super(key: key);
+
+  @override
+  State<FoodSelect> createState() => _FoodSelectState();
+}
+
+class _FoodSelectState extends State<FoodSelect> {
+  String category = 'Korean';
+  List<StoreInfo> storeInfo = [];
+  bool isLoading = false;
+
+  Future<void> getStoreInfoByCategory(
+    BuildContext context,
+    String category,
+  ) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final response =
+          await StoreService.getStoreInfoByCategory(context, category);
+      setState(() {
+        storeInfo = response;
+      });
+    } catch (e) {
+      debugPrint('getStoreInfo error');
+      rethrow;
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getStoreInfoByCategory(context, "한식");
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const CustomAppBar(
+        CustomAppBar(
           logoShown: false,
-          label: 'Category',
+          label: category,
           isHomeScreen: true,
         ),
         const SizedBox(
@@ -34,32 +73,62 @@ class FoodSelect extends StatelessWidget {
                     FoodCategory(
                       imageUrl: 'korean',
                       name: 'Korean',
-                      onTap: () {},
+                      onTap: () async {
+                        setState(() {
+                          category = 'Korean';
+                        });
+                        await getStoreInfoByCategory(context, "한식");
+                      },
                     ),
                     FoodCategory(
                       imageUrl: 'chicken',
                       name: 'Chicken',
-                      onTap: () {},
+                      onTap: () async {
+                        setState(() {
+                          category = 'Chicken';
+                        });
+                        await getStoreInfoByCategory(context, "치킨");
+                      },
                     ),
                     FoodCategory(
                       imageUrl: 'pizza',
                       name: 'Pizza',
-                      onTap: () {},
+                      onTap: () async {
+                        setState(() {
+                          category = 'Pizza';
+                        });
+                        await getStoreInfoByCategory(context, "피자");
+                      },
                     ),
                     FoodCategory(
                       imageUrl: 'japan',
                       name: 'Japanese',
-                      onTap: () {},
+                      onTap: () async {
+                        setState(() {
+                          category = 'Japanese';
+                        });
+                        await getStoreInfoByCategory(context, "일식");
+                      },
                     ),
                     FoodCategory(
                       imageUrl: 'western',
                       name: 'Westurn',
-                      onTap: () {},
+                      onTap: () async {
+                        setState(() {
+                          category = 'Western';
+                        });
+                        await getStoreInfoByCategory(context, "양식");
+                      },
                     ),
                     FoodCategory(
                       imageUrl: 'burger',
                       name: 'Burger',
-                      onTap: () {},
+                      onTap: () async {
+                        setState(() {
+                          category = 'Burger';
+                        });
+                        await getStoreInfoByCategory(context, "버거");
+                      },
                     ),
                   ],
                 ),
@@ -109,49 +178,40 @@ class FoodSelect extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Expanded(
-            child: SingleChildScrollView(
-          child: Column(
-            children: [
-              FoodStore(
-                imageUrl: 'assets/images/store_photo/bibimbap.png',
-                name: 'Brimful Meat Bibimbap',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const StoreInfoScreen(),
+        isLoading
+            ? const Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CupertinoActivityIndicator(
+                      radius: 20,
                     ),
-                  );
-                },
-              ),
-              FoodStore(
-                imageUrl: 'assets/images/store_photo/handa.png',
-                name: 'Handa-Sot Sooyeong',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const StoreInfoScreen(),
+                  ],
+                ),
+              )
+            : Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: List.generate(
+                      storeInfo.length,
+                      (index) => FoodStore(
+                        imageUrl: storeInfo[index].photo,
+                        name: storeInfo[index].storeName,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StoreInfoScreen(
+                                storeUuid: storeInfo[index].storeUuid,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
-              FoodStore(
-                imageUrl: 'assets/images/store_photo/bibimbap.png',
-                name: 'Brimful Meat Bibimbap',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const StoreInfoScreen(),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        )),
       ],
     );
   }

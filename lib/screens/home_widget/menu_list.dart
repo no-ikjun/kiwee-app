@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiwee/apis/user.dart';
 import 'package:kiwee/common/ui/color_set.dart';
 import 'package:kiwee/widgets/app_bar.dart';
 import 'package:kiwee/widgets/header.dart';
@@ -6,8 +7,36 @@ import 'package:kiwee/widgets/home_select_button.dart';
 import 'package:kiwee/widgets/saved_menu.dart';
 import 'package:scaler/scaler.dart';
 
-class MenuList extends StatelessWidget {
+Future<UserInfo> getUserInfo(BuildContext context) async {
+  try {
+    final response = await UserService.getUserInfo(context);
+    return response;
+  } catch (e) {
+    debugPrint('getUserInfo error');
+    rethrow;
+  }
+}
+
+class MenuList extends StatefulWidget {
   const MenuList({Key? key}) : super(key: key);
+
+  @override
+  State<MenuList> createState() => _MenuListState();
+}
+
+class _MenuListState extends State<MenuList> {
+  String userName = "";
+  int selectedButton = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getUserInfo(context).then((value) {
+      setState(() {
+        userName = value.userId;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +62,9 @@ class MenuList extends StatelessWidget {
                   Stack(
                     alignment: Alignment.topRight,
                     children: [
-                      const Text(
-                        "KIWEE's  ",
-                        style: TextStyle(
+                      Text(
+                        "$userName's  ",
+                        style: const TextStyle(
                           fontSize: 25,
                           fontFamily: "AppleSDGothicNeo800",
                           wordSpacing: -1,
@@ -79,16 +108,26 @@ class MenuList extends StatelessWidget {
                 children: [
                   SelectButton(
                     label: 'FAVORITE',
-                    onPressed: () {},
-                    color: ColorSet.primary,
+                    onPressed: () {
+                      setState(() {
+                        selectedButton = 0;
+                      });
+                    },
+                    color:
+                        selectedButton == 0 ? ColorSet.primary : ColorSet.sub01,
                   ),
                   const SizedBox(
                     width: 10,
                   ),
                   SelectButton(
                     label: 'REGULAR',
-                    onPressed: () {},
-                    color: ColorSet.sub01,
+                    onPressed: () {
+                      setState(() {
+                        selectedButton = 1;
+                      });
+                    },
+                    color:
+                        selectedButton == 1 ? ColorSet.primary : ColorSet.sub01,
                   ),
                 ],
               ),

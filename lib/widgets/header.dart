@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:kiwee/screens/login/login_screen.dart';
 import 'package:scaler/scaler.dart';
 
 class CustomHeader extends StatelessWidget {
@@ -31,9 +33,20 @@ class CustomHeader extends StatelessWidget {
                   width: 20,
                 ),
                 const SizedBox(width: 20),
-                SvgPicture.asset(
-                  'assets/images/menu_icon.svg',
-                  width: 17,
+                InkWell(
+                  onTap: () {
+                    const storage = FlutterSecureStorage();
+                    storage.delete(key: 'access_token');
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                        (route) => false);
+                  },
+                  child: SvgPicture.asset(
+                    'assets/images/menu_icon.svg',
+                    width: 17,
+                  ),
                 ),
               ],
             ),

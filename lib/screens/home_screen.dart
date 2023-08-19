@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kiwee/screens/home_widget/food_select.dart';
 import 'package:kiwee/screens/home_widget/menu_list.dart';
+import 'package:kiwee/screens/home_widget/order_history.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     FoodSelect(),
     MenuList(),
-    FoodSelect(),
+    OrderHistory(),
   ];
 
   void _onItemTapped(int index) {

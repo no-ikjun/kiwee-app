@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiwee/screens/home_screen.dart';
+import 'package:kiwee/screens/login/login_screen.dart';
 import 'package:kiwee/screens/splash_screen/network_error_screen.dart';
+import 'package:scaler/scaler.dart';
 
 final Connectivity _connectivity = Connectivity();
 
@@ -37,16 +40,19 @@ class _SplashScreenState extends State<SplashScreen> {
             MaterialPageRoute(builder: (context) => const NetWorkScreen()));
         return;
       }
-
-      try {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()));
-      } catch (e) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const NetWorkScreen()),
-            (route) => false);
-      }
+      const storage = FlutterSecureStorage();
+      storage.read(key: "access_token").then((value) {
+        debugPrint(value.toString());
+        if (value == "" || value == null) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()));
+          return;
+        } else {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()));
+          return;
+        }
+      });
     });
   }
 
@@ -57,8 +63,11 @@ class _SplashScreenState extends State<SplashScreen> {
       duration: const Duration(milliseconds: 500),
       child: Container(
         color: const Color(0xfffcfcfc),
-        child: const Center(
-          child: Text('good'),
+        child: Center(
+          child: Image.asset(
+            'assets/images/splash_icon.png',
+            width: Scaler.width(0.4, context),
+          ),
         ),
       ),
     );

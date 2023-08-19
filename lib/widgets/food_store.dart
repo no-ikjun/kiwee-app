@@ -44,9 +44,12 @@ class FoodStore extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Image.asset(
-                  imageUrl,
-                  fit: BoxFit.fitWidth,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Image.asset(
+                    'assets/images/store_photo/$imageUrl',
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
@@ -65,7 +68,7 @@ class FoodStore extends StatelessWidget {
                     ),
                     Image.asset(
                       'assets/images/order_time.png',
-                      height: 15,
+                      height: 18,
                     ),
                   ],
                 ),

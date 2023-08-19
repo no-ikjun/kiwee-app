@@ -1,13 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kiwee/apis/user.dart';
 import 'package:kiwee/common/ui/color_set.dart';
+import 'package:kiwee/screens/home_screen.dart';
 import 'package:kiwee/widgets/button.dart';
 import 'package:scaler/scaler.dart';
 
-class LoginScreen extends StatelessWidget {
+Future<void> login(BuildContext context, String id, String password) async {
+  try {
+    final response = await UserService.login(id, password);
+    debugPrint(response.toString());
+    if (response.message == '로그인 성공') {
+      debugPrint('login success');
+      const storage = FlutterSecureStorage();
+      storage.write(key: 'access_token', value: response.token.toString());
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        (route) => false,
+      );
+    } else {
+      debugPrint('login fail');
+    }
+  } catch (e) {
+    debugPrint('login error');
+  }
+}
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   static const String routeName = '/login';
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String userId = "";
+  String userPw = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +68,11 @@ class LoginScreen extends StatelessWidget {
               child: TextField(
                 autofocus: true,
                 keyboardType: TextInputType.text,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {
+                    userId = value;
+                  });
+                },
                 maxLines: 1,
                 decoration: const InputDecoration(
                   floatingLabelAlignment: FloatingLabelAlignment.start,
@@ -74,8 +109,13 @@ class LoginScreen extends StatelessWidget {
               child: TextField(
                 autofocus: true,
                 keyboardType: TextInputType.text,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {
+                    userPw = value;
+                  });
+                },
                 maxLines: 1,
+                obscureText: true,
                 decoration: const InputDecoration(
                   floatingLabelAlignment: FloatingLabelAlignment.start,
                   contentPadding: EdgeInsets.all(12),
@@ -126,7 +166,10 @@ class LoginScreen extends StatelessWidget {
               height: 20,
             ),
             customButton(
-              onPressed: () {},
+              onPressed: () async {
+                login(context, userId, userPw);
+                debugPrint('good');
+              },
               label: 'LOGIN',
               width: Scaler.width(0.85, context),
               height: 43,
