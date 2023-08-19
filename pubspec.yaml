@@ -74,6 +74,20 @@ flutter:
     - assets/images/store_green.svg
     - assets/images/list_grey.svg
     - assets/images/list_green.svg
+    - assets/images/food_icon/burger.png
+    - assets/images/food_icon/chicken.png
+    - assets/images/food_icon/japan.png
+    - assets/images/food_icon/pizza.png
+    - assets/images/food_icon/korean.png
+    - assets/images/food_icon/western.png
+    - assets/images/food_icon/one.png
+    - assets/images/store_photo/bibimbap.png
+    - assets/images/store_photo/handa.png
+    - assets/images/order_time.png
+    - assets/images/coupon_icon.png
+    - assets/images/store_background.png
+    - assets/images/menu_example.png
+    - assets/images/food_example.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
