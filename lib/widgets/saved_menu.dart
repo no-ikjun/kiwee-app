@@ -4,7 +4,19 @@ import 'package:kiwee/widgets/button.dart';
 import 'package:scaler/scaler.dart';
 
 class SavedMenu extends StatelessWidget {
-  const SavedMenu({Key? key}) : super(key: key);
+  final String menuName;
+  final String menuSubName;
+  final String menuPrice;
+  final String storeName;
+  final String menuUuid;
+  const SavedMenu({
+    Key? key,
+    required this.menuName,
+    required this.menuSubName,
+    required this.menuPrice,
+    required this.storeName,
+    required this.menuUuid,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +46,19 @@ class SavedMenu extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '스타벅스',
-                    style: TextStyle(
+                    storeName,
+                    style: const TextStyle(
                       fontSize: 25,
                       fontFamily: "AppleSDGothicNeo800",
                       wordSpacing: -1,
                       color: ColorSet.sub03,
                     ),
                   ),
-                  Text(
+                  const Text(
                     '수정하기',
                     style: TextStyle(
                       fontSize: 15,
@@ -60,9 +72,9 @@ class SavedMenu extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                '아이스 아메리카노',
-                style: TextStyle(
+              Text(
+                menuName,
+                style: const TextStyle(
                   fontSize: 20,
                   fontFamily: "AppleSDGothicNeo700",
                   wordSpacing: -1,
@@ -72,12 +84,12 @@ class SavedMenu extends StatelessWidget {
               const SizedBox(
                 height: 4,
               ),
-              const Row(
+              Row(
                 children: [
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text(
-                    '매장컵 | tall | 얼음 적게',
-                    style: TextStyle(
+                    menuSubName,
+                    style: const TextStyle(
                       fontSize: 15,
                       fontFamily: "AppleSDGothicNeo700",
                       wordSpacing: -1,
@@ -90,7 +102,9 @@ class SavedMenu extends StatelessWidget {
                 height: 20,
               ),
               customButton(
-                onPressed: () {},
+                onPressed: () {
+                  debugPrint(menuUuid);
+                },
                 label: '주문하기',
                 width: Scaler.width(1, context),
                 height: 40,

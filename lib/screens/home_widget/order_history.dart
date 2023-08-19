@@ -5,8 +5,18 @@ import 'package:kiwee/widgets/button.dart';
 import 'package:kiwee/widgets/app_bar.dart';
 import 'package:scaler/scaler.dart';
 
-class OrderHistory extends StatelessWidget {
+class OrderHistory extends StatefulWidget {
   const OrderHistory({Key? key}) : super(key: key);
+
+  @override
+  State<OrderHistory> createState() => _OrderHistoryState();
+}
+
+class _OrderHistoryState extends State<OrderHistory> {
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

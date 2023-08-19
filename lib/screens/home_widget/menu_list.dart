@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:kiwee/apis/menu.dart';
 import 'package:kiwee/apis/user.dart';
 import 'package:kiwee/common/ui/color_set.dart';
 import 'package:kiwee/widgets/app_bar.dart';
@@ -6,16 +7,6 @@ import 'package:kiwee/widgets/header.dart';
 import 'package:kiwee/widgets/home_select_button.dart';
 import 'package:kiwee/widgets/saved_menu.dart';
 import 'package:scaler/scaler.dart';
-
-Future<UserInfo> getUserInfo(BuildContext context) async {
-  try {
-    final response = await UserService.getUserInfo(context);
-    return response;
-  } catch (e) {
-    debugPrint('getUserInfo error');
-    rethrow;
-  }
-}
 
 class MenuList extends StatefulWidget {
   const MenuList({Key? key}) : super(key: key);
@@ -27,6 +18,40 @@ class MenuList extends StatefulWidget {
 class _MenuListState extends State<MenuList> {
   String userName = "";
   int selectedButton = 0;
+  bool isLoading = false;
+  List<MenuInfo> menuInfo = [];
+
+  Future<UserInfo> getUserInfo(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final response = await UserService.getUserInfo(context);
+      setState(() {
+        isLoading = false;
+      });
+      return response;
+    } catch (e) {
+      debugPrint('getUserInfo error');
+      rethrow;
+    }
+  }
+
+  Future<List<MenuInfo>> getSavedMenuInfo(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final response = await MenuService.getSavedMenuInfo(context);
+      setState(() {
+        isLoading = false;
+      });
+      return response;
+    } catch (e) {
+      debugPrint('getSavedMenuInfo error');
+      rethrow;
+    }
+  }
 
   @override
   void initState() {
@@ -35,7 +60,17 @@ class _MenuListState extends State<MenuList> {
       setState(() {
         userName = value.userId;
       });
+      getSavedMenuInfo(context).then((value) {
+        setState(() {
+          menuInfo = value;
+        });
+      });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -137,17 +172,25 @@ class _MenuListState extends State<MenuList> {
         const SizedBox(
           height: 10,
         ),
-        const Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SavedMenu(),
-                SavedMenu(),
-                SavedMenu(),
-                SavedMenu(),
-              ],
-            ),
-          ),
+        Expanded(
+          child: isLoading
+              ? const CupertinoActivityIndicator(
+                  radius: 20,
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: List.generate(
+                      menuInfo.length,
+                      (index) => SavedMenu(
+                        storeName: '가게 이름',
+                        menuName: menuInfo[index].menuName,
+                        menuSubName: menuInfo[index].subName,
+                        menuPrice: menuInfo[index].menuPrice,
+                        menuUuid: menuInfo[index].menuUuid,
+                      ),
+                    ),
+                  ),
+                ),
         ),
       ],
     );
