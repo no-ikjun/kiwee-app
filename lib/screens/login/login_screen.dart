@@ -10,7 +10,7 @@ Future<void> login(BuildContext context, String id, String password) async {
   try {
     final response = await UserService.login(id, password);
     debugPrint(response.toString());
-    if (response.message == '로그인 성공') {
+    if (response.message == 'Login successfully.') {
       debugPrint('login success');
       const storage = FlutterSecureStorage();
       storage.write(key: 'access_token', value: response.token.toString());

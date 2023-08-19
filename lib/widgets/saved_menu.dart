@@ -63,7 +63,7 @@ class SavedMenu extends StatelessWidget {
                   Text(
                     storeName,
                     style: const TextStyle(
-                      fontSize: 25,
+                      fontSize: 23,
                       fontFamily: "AppleSDGothicNeo800",
                       wordSpacing: -1,
                       color: ColorSet.sub03,
