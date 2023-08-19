@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kiwee/common/ui/color_set.dart';
 
-class MenuInfo extends StatelessWidget {
+class MenuInfoWidget extends StatelessWidget {
   final String imageUrl;
   final String name;
   final String subName;
   final String price;
   final VoidCallback onTap;
-  const MenuInfo({
+  const MenuInfoWidget({
     Key? key,
     required this.imageUrl,
     required this.name,
@@ -31,56 +31,62 @@ class MenuInfo extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Bibimbap with Galbi',
-                  style: TextStyle(
-                    fontFamily: "AppleSDGothicNeo600",
-                    fontSize: 18,
-                    color: ColorSet.sub03,
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                const Text(
-                  'Bibimbap with Galbi',
-                  style: TextStyle(
-                    fontFamily: "AppleSDGothicNeo400",
-                    fontSize: 15,
-                    color: Color(0xFF7D7D7D),
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
-                    const SizedBox(
-                      width: 20,
+        InkWell(
+          onTap: onTap,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontFamily: "AppleSDGothicNeo600",
+                      fontSize: 18,
+                      color: ColorSet.sub03,
                     ),
-                    Text(
-                      '$price KRW',
-                      style: const TextStyle(
-                        fontFamily: "AppleSDGothicNeo600",
-                        fontSize: 16,
-                        color: ColorSet.sub03,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    subName,
+                    style: const TextStyle(
+                      fontFamily: "AppleSDGothicNeo400",
+                      fontSize: 15,
+                      color: Color(0xFF7D7D7D),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 20,
                       ),
-                    ),
-                  ],
+                      Text(
+                        '$price KRW',
+                        style: const TextStyle(
+                          fontFamily: "AppleSDGothicNeo600",
+                          fontSize: 16,
+                          color: ColorSet.sub03,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  imageUrl,
+                  width: 80,
                 ),
-              ],
-            ),
-            Image.asset(
-              'assets/images/landscape.png',
-              width: 80,
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
         const SizedBox(
           height: 15,

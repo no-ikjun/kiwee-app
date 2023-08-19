@@ -40,6 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
   String userId = "";
   String userPw = "";
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(

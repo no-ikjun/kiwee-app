@@ -1,10 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kiwee/apis/menu.dart';
 import 'package:kiwee/apis/store.dart';
 import 'package:kiwee/common/ui/color_set.dart';
+import 'package:kiwee/screens/order/order_detail_screen.dart';
 import 'package:kiwee/widgets/app_bar.dart';
 import 'package:kiwee/widgets/menu_info.dart';
 import 'package:scaler/scaler.dart';
+
+Future<void> saveMenuInfo(BuildContext context, String menuUuid) async {
+  try {
+    await MenuService.saveMenuInfo(context, menuUuid);
+  } catch (e) {
+    debugPrint('saveMenu error');
+    rethrow;
+  }
+}
 
 class StoreInfoScreen extends StatefulWidget {
   final String storeUuid;
@@ -20,6 +31,8 @@ class StoreInfoScreen extends StatefulWidget {
 class _StoreInfoScreenState extends State<StoreInfoScreen> {
   bool isLoading = false;
   StoreInfo? storeInfo;
+  List<MenuInfo> menuInfo = [];
+
   Future<void> getStoreInfoById(BuildContext context, String storeUuid) async {
     setState(() {
       isLoading = true;
@@ -38,10 +51,31 @@ class _StoreInfoScreenState extends State<StoreInfoScreen> {
     });
   }
 
+  Future<void> getMenuInfoByStoreId(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final response = await MenuService.getMenuInfoByStoreUuid(
+          context, storeInfo!.storeUuid);
+      setState(() {
+        menuInfo = response;
+      });
+    } catch (e) {
+      debugPrint('getStoreInfo error');
+      rethrow;
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    getStoreInfoById(context, widget.storeUuid);
+    getStoreInfoById(context, widget.storeUuid).then((value) {
+      getMenuInfoByStoreId(context);
+    });
   }
 
   @override
@@ -142,46 +176,46 @@ class _StoreInfoScreenState extends State<StoreInfoScreen> {
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                MenuInfo(
-                                  imageUrl: 'assets/images/food_example.png',
-                                  name: 'Bibimbap with Galbi',
-                                  subName:
-                                      'Bibimbap+Doenjang Stew+Special Sauce',
-                                  price: '9900',
-                                  onTap: () {},
+                                Column(
+                                  children: List.generate(
+                                    menuInfo.length,
+                                    (index) => MenuInfoWidget(
+                                      imageUrl: (menuInfo[index].photo == '' ||
+                                              menuInfo[index].photo == null)
+                                          ? 'assets/images/landscape.png'
+                                          : 'assets/images/menu_photo/${menuInfo[index].photo}',
+                                      name: menuInfo[index].menuName,
+                                      subName: menuInfo[index].subName,
+                                      price: menuInfo[index].menuPrice,
+                                      onTap: () async {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                OrderDetailScreen(
+                                              menuUuid:
+                                                  menuInfo[index].menuUuid,
+                                            ),
+                                          ),
+                                        );
+                                        /*
+                                        saveMenuInfo(
+                                          context,
+                                          menuInfo[index].menuUuid,
+                                        ).then((value) {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const HomeScreen(),
+                                            ),
+                                          );
+                                        });
+                                        */
+                                      },
+                                    ),
+                                  ),
                                 ),
-                                MenuInfo(
-                                  imageUrl: 'assets/images/food_example.png',
-                                  name: 'Bibimbap with Galbi',
-                                  subName:
-                                      'Bibimbap+Doenjang Stew+Special Sauce',
-                                  price: '9900',
-                                  onTap: () {},
-                                ),
-                                MenuInfo(
-                                  imageUrl: 'assets/images/food_example.png',
-                                  name: 'Bibimbap with Galbi',
-                                  subName:
-                                      'Bibimbap+Doenjang Stew+Special Sauce',
-                                  price: '9900',
-                                  onTap: () {},
-                                ),
-                                MenuInfo(
-                                  imageUrl: 'assets/images/food_example.png',
-                                  name: 'Bibimbap with Galbi',
-                                  subName:
-                                      'Bibimbap+Doenjang Stew+Special Sauce',
-                                  price: '9900',
-                                  onTap: () {},
-                                ),
-                                MenuInfo(
-                                  imageUrl: 'assets/images/food_example.png',
-                                  name: 'Bibimbap with Galbi',
-                                  subName:
-                                      'Bibimbap+Doenjang Stew+Special Sauce',
-                                  price: '9900',
-                                  onTap: () {},
-                                )
                               ],
                             ),
                           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kiwee/common/ui/color_set.dart';
+import 'package:kiwee/screens/order/order_code_screen.dart';
 import 'package:kiwee/widgets/button.dart';
 import 'package:scaler/scaler.dart';
 
@@ -46,6 +48,15 @@ class SavedMenu extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              /*
+              SvgPicture.asset(
+                'assets/images/wave_icon.svg',
+                width: 25,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              */
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -58,14 +69,9 @@ class SavedMenu extends StatelessWidget {
                       color: ColorSet.sub03,
                     ),
                   ),
-                  const Text(
-                    '수정하기',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: "AppleSDGothicNeo400",
-                      wordSpacing: -1,
-                      color: Color(0xFFD4D3CF),
-                    ),
+                  SvgPicture.asset(
+                    'assets/images/green_star.svg',
+                    width: 25,
                   ),
                 ],
               ),
@@ -104,8 +110,13 @@ class SavedMenu extends StatelessWidget {
               customButton(
                 onPressed: () {
                   debugPrint(menuUuid);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return OrderCodeScreen(
+                      menuUuid: menuUuid,
+                    );
+                  }));
                 },
-                label: '주문하기',
+                label: 'ORDER',
                 width: Scaler.width(1, context),
                 height: 40,
                 backgroundColor: ColorSet.sub03,

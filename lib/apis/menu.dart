@@ -7,7 +7,7 @@ class MenuInfo {
   final String menuPrice;
   final String storeUuid;
   final String subName;
-  final String photo;
+  final String? photo;
   MenuInfo(
     this.menuUuid,
     this.menuName,
@@ -69,6 +69,60 @@ class MenuService {
       return menuInfo;
     } catch (e) {
       debugPrint('getSavedMenuInfo error');
+      rethrow;
+    }
+  }
+
+  static Future<List<MenuInfo>> getMenuInfoByStoreUuid(
+    BuildContext context,
+    String storeUuid,
+  ) async {
+    final dio = await authDio(context);
+    try {
+      final res = await dio.get(
+        '/store/menu',
+        queryParameters: {'store_uuid': storeUuid},
+      );
+      final List<MenuInfo> menuInfo = [];
+      for (var i = 0; i < res.data.length; i++) {
+        menuInfo.add(MenuInfo.fromJson(res.data[i]));
+      }
+      return menuInfo;
+    } catch (e) {
+      debugPrint('getMenuInfoByStoreUuid error');
+      rethrow;
+    }
+  }
+
+  static Future<void> saveMenuInfo(
+    BuildContext context,
+    String menuUuid,
+  ) async {
+    final dio = await authDio(context);
+    try {
+      await dio.post(
+        '/user/menu',
+        data: {'menu_uuid': menuUuid},
+      );
+    } catch (e) {
+      debugPrint('saveMenuInfo error');
+      rethrow;
+    }
+  }
+
+  static Future<String> getStoreNameByMenuId(
+    BuildContext context,
+    String menuUuid,
+  ) async {
+    final dio = await authDio(context);
+    try {
+      final res = await dio.get(
+        '/menu/storename',
+        queryParameters: {'menu_uuid': menuUuid},
+      );
+      return res.data[0]['store_name'];
+    } catch (e) {
+      debugPrint('getStoreNameByMenuId error');
       rethrow;
     }
   }
