@@ -34,7 +34,7 @@ class MenuList extends StatelessWidget {
                     alignment: Alignment.topRight,
                     children: [
                       const Text(
-                        '키위새님의  ',
+                        "KIWEE's  ",
                         style: TextStyle(
                           fontSize: 25,
                           fontFamily: "AppleSDGothicNeo800",
@@ -54,7 +54,7 @@ class MenuList extends StatelessWidget {
                     ],
                   ),
                   const Text(
-                    '저장된 메뉴 리스트',
+                    'Saved Menu List',
                     style: TextStyle(
                       fontSize: 25,
                       fontFamily: "AppleSDGothicNeo800",
@@ -78,7 +78,7 @@ class MenuList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SelectButton(
-                    label: '즐겨찾기',
+                    label: 'FAVORITE',
                     onPressed: () {},
                     color: ColorSet.primary,
                   ),
@@ -86,7 +86,7 @@ class MenuList extends StatelessWidget {
                     width: 10,
                   ),
                   SelectButton(
-                    label: '단골식당',
+                    label: 'REGULAR',
                     onPressed: () {},
                     color: ColorSet.sub01,
                   ),

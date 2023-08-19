@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                 decoration: const InputDecoration(
                   floatingLabelAlignment: FloatingLabelAlignment.start,
                   contentPadding: EdgeInsets.all(12),
-                  hintText: '아이디를 입력하세요',
+                  hintText: 'Insert ID',
                   hintStyle: TextStyle(
                     fontFamily: "AppleSDGothicNeo500",
                     fontSize: 14,
@@ -79,7 +79,7 @@ class LoginScreen extends StatelessWidget {
                 decoration: const InputDecoration(
                   floatingLabelAlignment: FloatingLabelAlignment.start,
                   contentPadding: EdgeInsets.all(12),
-                  hintText: '비밀번호를 입력하세요',
+                  hintText: 'Insert Password',
                   hintStyle: TextStyle(
                     fontFamily: "AppleSDGothicNeo500",
                     fontSize: 14,
@@ -112,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    '계정 찾기 | 회원가입하기',
+                    'Find Account | Create Account',
                     style: TextStyle(
                       fontFamily: "AppleSDGothicNeo500",
                       fontSize: 14,
@@ -127,7 +127,7 @@ class LoginScreen extends StatelessWidget {
             ),
             customButton(
               onPressed: () {},
-              label: '로그인',
+              label: 'LOGIN',
               width: Scaler.width(0.85, context),
               height: 43,
               fontSize: 15,

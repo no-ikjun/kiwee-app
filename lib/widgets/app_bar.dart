@@ -33,13 +33,7 @@ class CustomAppBar extends StatelessWidget {
         hoverColor: Colors.transparent,
         highlightColor: Colors.transparent,
         padding: const EdgeInsets.only(left: 20),
-        icon: isHomeScreen
-            ? Container()
-            : const Icon(
-                Icons.home,
-                color: ColorSet.sub03,
-                size: 20,
-              ),
+        icon: isHomeScreen ? Container() : iconData,
         onPressed: isHomeScreen
             ? () {}
             : () {
