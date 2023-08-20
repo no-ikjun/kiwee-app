@@ -265,7 +265,8 @@ class _OrderCodeScreenState extends State<OrderCodeScreen> {
                                           height: 20,
                                         ),
                                         QrImageView(
-                                          data: widget.menuUuid,
+                                          data:
+                                              '${menuInfo!.menuName} | ${widget.menuUuid.split('-')[0]}',
                                           size: Scaler.width(0.65, context),
                                         ),
                                       ],
